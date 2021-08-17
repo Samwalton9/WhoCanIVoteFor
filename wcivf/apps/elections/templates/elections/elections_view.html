@@ -8,6 +8,22 @@
 
     {% include 'elections/includes/_elections_breadcrumbs.html' %}
 
+    <aside class="ds-filter" aria-labelledby="filter-label">
+        <div class="ds-filter-cluster">
+            <ul aria-labelledby="adv-filter-label-3">
+                <li id="adv-filter-label-3" class="ds-filter-label" aria-hidden="true">Election type:</li>
+                <li><a href="?all" aria-current="true">All</a></li>
+                <li><a href="?gla">Greater London Assembly</a></li>
+                <li><a href="?local">Local</a></li>
+                <li><a href="?mayoral">Mayoral</a></li>
+                <li id="?parl"><a id="?parl" href="?parl">UK Parliament</a></li>
+                <li><a href="?pcc">Police &amp; Crime Commissioner</a></li>
+                <li><a href="?scottish">Scottish parliament</a></li>
+                <li><a href="?senedd">Senedd Cymru</a></li>
+            </ul>
+        </div>
+    </aside>
+
     <div class="ds-stack-smaller">
         <div class="ds-card">
             <div class="ds-card-body">
