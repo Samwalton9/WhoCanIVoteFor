@@ -4,24 +4,26 @@
 {% block og_title %}{% trans "UK Elections" %}{% endblock og_title %}
 {% block og_description %}{% trans "All Elections in the UK" %}{% endblock og_description %}
 
+
 {% block content %}
 
     {% include 'elections/includes/_elections_breadcrumbs.html' %}
-
+    {% comment %} {% if javascript_enabled %}   {% endcomment %}
     <aside class="ds-filter" aria-labelledby="filter-label">
-        <div class="ds-filter-cluster" id="election-filers">
+        <div class="ds-filter-cluster" id="election-filters">
             <ul aria-labelledby="adv-filter-label-3">
                 <li id="adv-filter-label-3" class="ds-filter-label" aria-hidden="true">Election type:</li>
-                <li class="btn"><a href="?all" onclick=filterSelection('all') aria-current="true">All</a></li>
-                <li class="btn"><a href="?gla" onclick=filterSelection('gla') >Greater London Assembly</a></li>
-                <li class="btn"><a href="?local" onclick=filterSelection('local')>Local</a></li>
-                <li class="btn"><a id="?parl" href="?parl" onclick=filterSelection('local')>UK Parliament</a></li>
-                <li class="btn"><a href="?pcc" onclick=filterSelection('pcc')>Police &amp; Crime Commissioner</a></li>
-                <li class="btn"><a href="?scottish" onclick=filterSelection('scottish')>Scottish parliament</a></li>
-                <li class="btn"><a href="?senedd" onclick=filterSelection('senedd')>Senedd Cymru</a></li>
+                <li id="all" class="btn"><a href="?all" aria-current="true">All</a></li>
+                <li id="gla" class="btn"><a class="gla" href="?gla">Greater London Assembly</a></li>
+                <li id="local" class="btn"><a href="?local" >Local</a></li>
+                <li id="parl" class="btn"><a href="?parl" href="?parl" >UK Parliament</a></li>
+                <li id="pcc" class="btn"><a href="?pcc" >Police &amp; Crime Commissioner</a></li>
+                <li id="scottish" class="btn"><a href="?scottish" >Scottish parliament</a></li>
+                <li id="senedd" class="btn"><a href="?senedd" >Senedd Cymru</a></li>
             </ul>
         </div>
     </aside>
+    {% comment %} {% endif %} {% endcomment %}
 
     <div class="ds-stack-smaller">
         <div class="ds-card">
@@ -42,52 +44,90 @@
         {% include "feedback/feedback_form.html" %}
     </div>
 
-{% endblock content %}
+    <script type="text/javascript">
+        var local = [];
+        var gla = [];
+        var parl = [];
+        var pcc = [];
+        var scottish = [];
+        var senedd = [];
+        var all = document.querySelectorAll('#election-urls ul li a');
 
-<script>
-    filterSelection("parl")
-    function filterSelection(c) {
-        debugger
-        var x, i;
-        x = document.getElementsByClassName("filterDiv");
-        if (c == "all") c = "";
-        for (i = 0; i < x.length; i++) {
-            RemoveClass(x[i], "show");
-            if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
-        }
-    }
-
-    function AddClass(element, name) {
-        var i, arr1, arr2;
-        arr1 = element.className.split(" ");
-        arr2 = name.split(" ");
-        for (i = 0; i < arr2.length; i++) {
-            if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
-        }
-    }
-
-    function RemoveClass(element, name) {
-        var i, arr1, arr2;
-        arr1 = element.className.split(" ");
-        arr2 = name.split(" ");
-        for (i = 0; i < arr2.length; i++) {
-            while (arr1.indexOf(arr2[i]) > -1) {
-                arr1.splice(arr1.indexOf(arr2[i]), 1);
+        document.getElementById("pcc").addEventListener("click", function(e){
+            e.preventDefault();
+            for (var i = 0; i < all.length; i++) {
+                if (all[i].href.includes('pcc')) {
+                    all[i].style.display = "block";
+                    pcc.push(all[i]);
+                } else {
+                    all[i].style.display = "none";
+                }
             }
-        }
-        element.className = arr1.join(" ");
-    }
-
-    // Add active class to the current button (highlight it)
-    var btnContainer = document.getElementById("election-filters");
-    var btns = btnContainer.getElementsByClassName("btn");
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function(){
-            var current = document.getElementsByClassName("active");
-            current[0].className = current[0].className.replace(" active", "");
-            this.className += " active";
         });
-    }
 
-</script>
-#election-filers > ul > li:nth-child(3) > a
+        document.getElementById("local").addEventListener("click", function(e){
+            e.preventDefault();
+            for (var i = 0; i < all.length; i++) {
+                if (all[i].href.includes('local')) {
+                    all[i].style.display = "block";
+                } else {
+                    all[i].style.display = "none";
+                }
+            }
+        });
+
+        document.getElementById("gla").addEventListener("click", function(e){
+            e.preventDefault();
+            for (var i = 0; i < all.length; i++) {
+                if (all[i].href.includes('gla')) {
+                    all[i].style.display = "block";
+                } else {
+                    all[i].style.display = "none";
+                }
+            }
+        });
+
+        document.getElementById("parl").addEventListener("click", function(e){
+            e.preventDefault();
+            for (var i = 0; i < all.length; i++) {
+                if (all[i].href.includes('parl')) {
+                    all[i].style.display = "block";
+                } else {
+                    all[i].style.display = "none";
+                }
+            }
+        });
+
+        document.getElementById("scottish").addEventListener("click", function(e){
+            e.preventDefault();
+            for (var i = 0; i < all.length; i++) {
+                if (all[i].href.includes('scottish')) {
+                    all[i].style.display = "block";
+                } else {
+                    all[i].style.display = "none";
+                }
+            }
+        });
+
+        document.getElementById("senedd").addEventListener("click", function(e){
+            e.preventDefault();
+            for (var i = 0; i < all.length; i++) {
+                if (all[i].href.includes('senedd')) {
+                    all[i].style.display = "block";
+                } else {
+                    all[i].style.display = "none";
+                }
+            }
+        });
+
+        document.getElementById("all").addEventListener("click", function(e){
+            e.preventDefault();
+            for (var i = 0; i < all.length; i++) {
+                all[i].style.display = "block";
+            }
+        });
+
+
+    </script>
+
+{% endblock content %}
