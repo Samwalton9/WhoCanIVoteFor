@@ -52,6 +52,7 @@
         var scottish = [];
         var senedd = [];
         var all = document.querySelectorAll('#election-urls ul li a');
+        var date_grouper = document.querySelectorAll('#election-urls')
 
         document.getElementById("pcc").addEventListener("click", function(e){
             e.preventDefault();
@@ -63,6 +64,7 @@
                     all[i].style.display = "none";
                 }
             }
+            checkHideDate()
         });
 
         document.getElementById("local").addEventListener("click", function(e){
@@ -70,10 +72,12 @@
             for (var i = 0; i < all.length; i++) {
                 if (all[i].href.includes('local')) {
                     all[i].style.display = "block";
+                    local.push(all[i]);
                 } else {
                     all[i].style.display = "none";
                 }
             }
+            checkHideDate()
         });
 
         document.getElementById("gla").addEventListener("click", function(e){
@@ -81,10 +85,12 @@
             for (var i = 0; i < all.length; i++) {
                 if (all[i].href.includes('gla')) {
                     all[i].style.display = "block";
+                    gla.push(all[i]);
                 } else {
                     all[i].style.display = "none";
                 }
             }
+            checkHideDate()
         });
 
         document.getElementById("parl").addEventListener("click", function(e){
@@ -92,10 +98,12 @@
             for (var i = 0; i < all.length; i++) {
                 if (all[i].href.includes('parl')) {
                     all[i].style.display = "block";
+                    parl.push(all[i]);
                 } else {
                     all[i].style.display = "none";
                 }
             }
+            checkHideDate()
         });
 
         document.getElementById("scottish").addEventListener("click", function(e){
@@ -103,10 +111,12 @@
             for (var i = 0; i < all.length; i++) {
                 if (all[i].href.includes('scottish')) {
                     all[i].style.display = "block";
+                    scottish.push(all[i]);
                 } else {
                     all[i].style.display = "none";
                 }
             }
+            checkHideDate()
         });
 
         document.getElementById("senedd").addEventListener("click", function(e){
@@ -114,10 +124,12 @@
             for (var i = 0; i < all.length; i++) {
                 if (all[i].href.includes('senedd')) {
                     all[i].style.display = "block";
+                    senedd.push(all[i]);
                 } else {
                     all[i].style.display = "none";
                 }
             }
+            checkHideDate()
         });
 
         document.getElementById("all").addEventListener("click", function(e){
@@ -127,7 +139,20 @@
             }
         });
 
-
+        function checkHideDate() {
+            for (var i = 0; i < date_grouper.length; i++) {
+                all_hidden = true;
+                date_grouper_urls = date_grouper[i].querySelectorAll('li a');
+                for (var j = 0; j < date_grouper_urls.length; j++) {
+                    if (date_grouper_urls[j].style.display == '' && date_grouper_urls[j] in local) {
+                        all_hidden = true;
+                        date_grouper[i].previousElementSibling.style.display = "none";
+                    } else {
+                        date_grouper[i].previousElementSibling.style.display = "block";
+                    }
+                }
+            }
+        }
     </script>
 
 {% endblock content %}
