@@ -113,7 +113,17 @@
                 </div>
             {% else %}
                 <div>
-                    {% blocktrans with person_name=object.name %}<dt>We don't know {{ person_name }}'s email address.</dt>{% endblocktrans %}
+                    <dt>
+                        {% if object.name_endswith_s %}
+                            {% blocktrans trimmed with person_name=object.name %}
+                                We don't know {{ person_name }}' email address.
+                            {% endblocktrans %}
+                        {% else %}
+                            {% blocktrans trimmed with person_name=object.name %}
+                                We don't know {{ person_name }}'s email address.
+                            {% endblocktrans %}
+                        {% endif %}
+                    </dt>
                     <dd>
                         <a href="{{ object.get_ynr_url }}">{% trans "Can you add it?" %}</a>
                     </dd>

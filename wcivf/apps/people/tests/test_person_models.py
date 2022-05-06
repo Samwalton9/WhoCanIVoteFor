@@ -147,3 +147,11 @@ class TestPersonModel(TestCase):
             expected = candidacy[1]
             with self.subTest(msg=candidacy[1]):
                 self.assertEqual(person.intro_template, expected)
+
+    def test_name_endswith_s_true(self):
+        self.person.name = "John Richards"
+        self.assertTrue(self.person.name_endswith_s)
+
+    def test_name_endswith_s_false(self):
+        self.person.name = "John Smith"
+        self.assertFalse(self.person.name_endswith_s)

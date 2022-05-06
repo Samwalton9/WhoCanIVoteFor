@@ -353,6 +353,17 @@ class Person(models.Model):
         intro = intro.strip()
         return " ".join(intro.split())
 
+    @property
+    def name_endswith_s(self):
+        """
+        If the person's name ends with s, return True, else return False,
+        for the purpose of determining possessive noun formatting
+        """
+        if self.name.endswith("s"):
+            return True
+        else:
+            return False
+
 
 class AssociatedCompany(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
