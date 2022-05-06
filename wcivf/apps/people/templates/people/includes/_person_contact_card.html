@@ -11,14 +11,26 @@
                     <div>
                         {% if object.facebook_personal_url %}
                             <dd>
-                                <a href="{{ object.facebook_personal_url }}" title="{% blocktrans with person_name=object.name%}{{ person_name }}'s personal Facebook{% endblocktrans%}">
+                                <a href="{{ object.facebook_personal_url }}" title="
+                                    {% if object.name_endswith_s %}
+                                        {% blocktrans with person_name=object.name %}{{ person_name }}' personal Facebook{% endblocktrans %}
+                                    {% else %}
+                                        {% blocktrans with person_name=object.name %}{{ person_name }}'s personal Facebook{% endblocktrans %}
+                                    {% endif %}
+                                    ">
                                     {{ object.facebook_personal_username }}
                                 </a><br />
                             </dd>
                         {% endif %}
                         {% if object.facebook_page_url %}
                             <dd>
-                                <a href="{{ object.facebook_page_url }}" title="{% blocktrans with person_name=object.name%}{{ person_name }}'s Facebook page{% endblocktrans%}">
+                                <a href="{{ object.facebook_page_url }}" title="
+                                    {% if object.name_endswith_s %}
+                                        {% blocktrans with person_name=object.name %}{{ person_name }}' Facebook page{% endblocktrans %}
+                                    {% else %}
+                                        {% blocktrans with person_name=object.name %}{{ person_name }}'s Facebook page{% endblocktrans %}
+                                    {% endif %}
+                                    ">
                                     {{ object.facebook_username}}
                                 </a>
                             </dd>
@@ -31,7 +43,7 @@
                 <div>
                     <dt>{% trans "LinkedIn" %}</dt>
                     <dd>
-                        <a href="{{ object.linkedin_url }}" title="{% blocktrans with person_name=object.name%}{{ person_name }}'s LinkedIn profile{% endblocktrans%}">
+                        <a href="{{ object.linkedin_url }}" title="{% blocktrans with person_name=object.name %}LinkedIn profile for {{ person_name }}{% endblocktrans %}">
                             {{ object.linkedin_username}}
                         </a>
                     </dd>
@@ -42,7 +54,7 @@
                 <div>
                     <dt>{% trans "Home page" %}</dt>
                     <dd>
-                        <a href="{{ object.homepage_url }}" title="{% blocktrans with person_name=object.name%}{{ person_name }}'s home page{% endblocktrans%}">
+                        <a href="{{ object.homepage_url }}" title="{% blocktrans with person_name=object.name %}Home page for {{ person_name }}{% endblocktrans %}">
                             {{ object.homepage_url }}
                         </a>
                     </dd>
@@ -53,8 +65,18 @@
                 <div>
                     <dt>{% trans "Blog" %}</dt>
                     <dd>
-                        <a href="{{ object.blog_url }}" title="{% blocktrans with person_name=object.name%}{{ person_name }}'s blog{% endblocktrans%}">
-                            {% blocktrans with person_name=object.name%}{{ person_name }}'s blog{% endblocktrans%}
+                        <a href="{{ object.blog_url }}" title="
+                            {% if object.name_endswith_s %}
+                                {% blocktrans with person_name=object.name %}{{ person_name }}' blog{% endblocktrans %}
+                            {% else %}
+                                {% blocktrans with person_name=object.name %}{{ person_name }}'s blog{% endblocktrans %}
+                            {% endif %}
+                            ">
+                            {% if object.name_endswith_s %}
+                                {% blocktrans with person_name=object.name %}{{ person_name }}' blog{% endblocktrans %}
+                            {% else %}
+                                {% blocktrans with person_name=object.name %}{{ person_name }}'s blog{% endblocktrans %}
+                            {% endif %}
                         </a>
                     </dd>
                 </div>
@@ -64,7 +86,7 @@
                 <div>
                     <dt>{% trans "Instagram" %}</dt>
                     <dd>
-                        <a href="{{ object.instagram_url }}" title="{% blocktrans with person_name=object.name%}{{ person_name }}'s Instagram{% endblocktrans%}">
+                        <a href="{{ object.instagram_url }}" title="{% blocktrans with person_name=object.name %}Instagram account of {{ person_name }}{% endblocktrans %}">
                             {{ object.instagram_username }}
                         </a>
                     </dd>
@@ -75,7 +97,7 @@
                 <div>
                     <dt>{% trans "YouTube" %}</dt>
                     <dd>
-                        <a href="{{ object.youtube_profile }}" title="{% blocktrans with person_name=object.name%}{{ person_name }}'s YouTube{% endblocktrans%}">
+                        <a href="{{ object.youtube_profile }}" title="{% blocktrans with person_name=object.name %}YouTube profile for {{ person_name }}{% endblocktrans %}">
                             {{ object.youtube_username }}
                         </a>
                     </dd>
@@ -86,7 +108,7 @@
                 <div>
                     <dt>Wikipedia</dt>
                     <dd>
-                        <a href="{{ object.wikipedia_url }}" title="{{ person_name }}'s Wikipedia">
+                        <a href="{{ object.wikipedia_url }}" title="{% blocktrans with person_name=object.name %}Wikipedia article for {{ person_name }}{% endblocktrans %}">
                             {{ object.wikipedia_url }}
                         </a>
                     </dd>
@@ -97,7 +119,7 @@
                 <div>
                     <dt>{% trans "The party's candidate page for this person" %}</dt>
                     <dd>
-                        <a href="{{ object.party_ppc_page_url }}" title="{% blocktrans with person_name=object.name%}Party page for {{ person_name }}{% endblocktrans%}">
+                        <a href="{{ object.party_ppc_page_url }}" title="{% blocktrans with person_name=object.name %}Party page for {{ person_name }}{% endblocktrans %}">
                             {{ object.party_ppc_page_url }}
                         </a>
                     </dd>
@@ -108,7 +130,7 @@
                 <div>
                     <dt>{% trans "Email" %}</dt>
                     <dd>
-                        <a href="mailto:{{ object.email }}" title="{% blocktrans with person_name=object.name%}{{ person_name }}'s email{% endblocktrans%}">{{ object.email }}</a>
+                        <a href="mailto:{{ object.email }}" title="{% blocktrans with person_name=object.name %}Email address for {{ person_name }}{% endblocktrans %}">{{ object.email }}</a>
                     </dd>
                 </div>
             {% else %}
