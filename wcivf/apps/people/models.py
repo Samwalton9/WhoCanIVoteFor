@@ -408,18 +408,19 @@ class Person(models.Model):
 
         return f"{base}base.html"
 
+    def get_verb(self):
+        if self.death_date:
+            return "was"
+        if self.future_candidacies:
+            return "is"
+        return "was"
+
     @cached_property
     def intro(self):
         """
         Return a rendered string of the persons intro from a template.
         """
-        verb = "was"
-        if (
-            self.current_or_future_candidacies
-            and not self.death_date
-            and not self.current_but_past_candidacies
-        ):
-            verb = "is"
+        verb = self.get_verb()
 
         context = {
             "verb": verb,
