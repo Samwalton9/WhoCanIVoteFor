@@ -21,6 +21,9 @@
 
         {% if not address_picker %}
 
+            {% if parl_boundary_changes %}
+                {% include "elections/includes/parl_boundary_changes.html" %}
+            {% endif %}
 
             {% regroup postelections by election.election_date as elections_by_date %}
             {% for election_group in elections_by_date %}

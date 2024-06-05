@@ -1,0 +1,106 @@
+<div class="ds-card" id="parl_boundary_changes">
+    <div class="ds-card-body">
+        {% if parl_boundary_changes.CHANGE_TYPE ==  "BOUNDARY_CHANGE" %}
+            <h2 class="ds-h4">Your constituency is changing</h2>
+            <p>At the last parliamentary election, your constituency was
+                <em>{{ parl_boundary_changes.current_constituencies_name }}</em>.
+                <p>At the next general election on the 4th of July, your new constituency
+                    have the same name, but the boundary will change.
+                </p>
+        {% endif %}
+        {% if parl_boundary_changes.CHANGE_TYPE ==  "NAME_CHANGE_BOUNDARY_CHANGE" %}
+            <h2 class="ds-h4">Your constituency is changing</h2>
+            <p>At the last parliamentary election, your constituency was
+                <em>{{ parl_boundary_changes.current_constituencies_name }}</em>.
+                <p>At the next general election on the 4th of July, constituency boundary will change and
+                    the new name will be <em>{{ parl_boundary_changes.new_constituencies_name }}</em>.
+                </p>
+        {% endif %}
+        {% if parl_boundary_changes.CHANGE_TYPE ==  "NAME_CHANGE" %}
+            <h2 class="ds-h4">Your constituency name is changing</h2>
+            <p>At the last parliamentary election, your constituency was called
+                <em>{{ parl_boundary_changes.current_constituencies_name }}</em>.
+                <p>At the next general election on the 4th of July, constituency boundary will remain the
+                    same, but the new name will be
+                    <em>{{ parl_boundary_changes.new_constituencies_name }}</em>.
+                </p>
+        {% endif %}
+        {% if parl_boundary_changes.CHANGE_TYPE ==  "NO_CHANGE" %}
+            <h2 class="ds-h4">Your constituency name is changing</h2>
+            <p>At the last parliamentary election, your constituency was called
+                <em>{{ parl_boundary_changes.current_constituencies_name }}</em>.
+                <p>At the next general election on the 4th of July, constituency boundary will remain the
+                    same, but the new name will be
+                    <em>{{ parl_boundary_changes.new_constituencies_name }}</em>.
+                </p>
+        {% endif %}
+
+
+    </div>
+    {% if parl_boundary_changes.CHANGE_TYPE !=  "NO_CHANGE" %}
+        <div class="ds-card-image" id="boundary_change_area_map" style="height:400px"></div>
+    {% endif %}
+</div>
+
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.2/leaflet.css"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.2/leaflet.js"></script>
+<script type="text/javascript">
+    window.addEventListener('load', function () {
+        tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data ⓒ <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+            subdomains: 'abc'
+        });
+
+        map = L.map('boundary_change_area_map', {
+            layers: [tiles]
+        });
+
+        function onEachFeature(feature, layer) {
+            if (feature.properties.current) {
+                popup = "New constituency: " + feature.properties.division["name"]
+            } else {
+                popup = "Old constituency: " + feature.properties.division["name"]
+            }
+            layer.bindPopup(`${popup}`);
+        };
+
+        var geoJsonUrls = [
+            'https://s3.eu-west-2.amazonaws.com/ee.public.data/parl_boundary_change_geojson/2010/{{ parl_boundary_changes.current_constituencies_official_identifier }}.geojson',
+            'https://s3.eu-west-2.amazonaws.com/ee.public.data/parl_boundary_change_geojson/2024/{{ parl_boundary_changes.new_constituencies_official_identifier }}.geojson'
+        ];
+        Promise.all(geoJsonUrls.map(url => fetch(url).then(response => response.json())))
+            .then(data => {
+                var allLayers = L.featureGroup();
+                var old_boundary = L.geoJSON(data[0], {
+                    style: {
+                        color: 'rgba(64, 63, 65, 0.8)',
+                        stroke: false,
+                        fillOpacity: 0.4
+                    },
+                    onEachFeature: onEachFeature
+                });
+                allLayers.addLayer(old_boundary);
+                var new_boundary = L.geoJSON(data[1], {
+                    style: {
+                        color: '#E6007C',
+                        stroke: false,
+                        fillOpacity: 0.4
+                    },
+                    onEachFeature: onEachFeature
+                });
+                allLayers.addLayer(new_boundary);
+                allLayers.addTo(map);
+                map.fitBounds(allLayers.getBounds());
+                var postcodeLocation = {{postcode_location|safe}};
+                layer = L.geoJSON(postcodeLocation, {
+                    style: {color: '#00B6FF'}
+                });
+                map.addLayer(layer);
+            });
+
+
+    }
+    );
+</script>

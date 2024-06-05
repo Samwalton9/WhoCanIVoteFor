@@ -50,7 +50,9 @@ class PostcodeToPostsMixin(object):
             "address_picker": results_json["address_picker"],
             "polling_station": {},
             "electoral_services": results_json["electoral_services"],
-            "postcode_location": json.dumps(results_json["postcode_location"]),
+            "postcode_location": json.dumps(
+                results_json.get("postcode_location", "")
+            ),
         }
 
         if parl_boundary_changes:
