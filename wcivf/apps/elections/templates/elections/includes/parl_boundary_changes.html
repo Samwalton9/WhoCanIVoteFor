@@ -38,6 +38,26 @@
 
     </div>
     {% if parl_boundary_changes.CHANGE_TYPE !=  "NO_CHANGE" %}
+        <style>
+            .map-key {
+                margin: 0 1.95312rem;
+            }
+            .map-key span::before {
+                content: "";
+                display:inline-block;
+                height:1em;
+                width: 1em;
+                border:1px solid black;
+                margin:0 0.1em 0 0.5em;
+            }
+            .key-grey::before {background-color: rgba(64, 63, 65, 0.5);}
+            .key-pink::before {background-color: rgba(230, 0, 124, 0.5);}
+        </style>
+        <p class="map-key">Key:
+            <span class="key-grey">Previous constituency (grey)</span>
+            <span class="key-pink">new constituency (pink)</span>
+        </p>
+
         <div class="ds-card-image" id="boundary_change_area_map" style="height:400px"></div>
     {% endif %}
 </div>
@@ -75,18 +95,18 @@
                 var allLayers = L.featureGroup();
                 var old_boundary = L.geoJSON(data[0], {
                     style: {
-                        color: 'rgba(64, 63, 65, 0.8)',
+                        color: 'rgba(64, 63, 65, 0.5)',
                         stroke: false,
-                        fillOpacity: 0.4
+                        fillOpacity: 1
                     },
                     onEachFeature: onEachFeature
                 });
                 allLayers.addLayer(old_boundary);
                 var new_boundary = L.geoJSON(data[1], {
                     style: {
-                        color: '#E6007C',
+                        color: 'rgba(230, 0, 124, 0.5)',
                         stroke: false,
-                        fillOpacity: 0.4
+                        fillOpacity: 1
                     },
                     onEachFeature: onEachFeature
                 });
