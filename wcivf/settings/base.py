@@ -283,6 +283,7 @@ LOGGER_ARN = os.environ.get("LOGGER_ARN", None)
 firehose_args = {"function_arn": LOGGER_ARN} if LOGGER_ARN else {"fake": True}
 POSTCODE_LOGGER = DCWidePostcodeLoggingClient(**firehose_args)
 
+SHOW_PARL_BOUNDARY_CHANGES = os.environ.get("SHOW_PARL_BOUNDARY_CHANGES", False)
 
 with contextlib.suppress(ImportError):
     # .local.py overrides all the common settings.

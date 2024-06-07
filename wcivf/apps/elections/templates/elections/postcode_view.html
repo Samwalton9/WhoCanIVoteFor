@@ -20,8 +20,6 @@
         {% endif %}
 
         {% if not address_picker %}
-
-
             {% regroup postelections by election.election_date as elections_by_date %}
             {% for election_group in elections_by_date %}
                 {% for postelection in election_group.list %}

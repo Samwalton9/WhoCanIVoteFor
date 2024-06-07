@@ -24,14 +24,15 @@ class DevsDCClient:
             api_key = settings.DEVS_DC_API_KEY
         self.API_KEY = api_key
 
-    def make_request(self, postcode, uprn=None):
+    def make_request(self, postcode, uprn=None, **extra_params):
         path = f"/api/v1/postcode/{postcode}/"
         if uprn:
             path = f"/api/v1/address/{uprn}/"
         url = urljoin(self.API_BASE, path)
-        req = requests.get(
-            url, params={"auth_token": self.API_KEY, "include_current": 1}
-        )
+        default_params = {"auth_token": self.API_KEY, "include_current": 1}
+        if extra_params:
+            default_params.update(**extra_params)
+        req = requests.get(url, params=default_params)
         if req.status_code >= 400:
             raise DevsDCAPIException(response=req)
         return req.json()
