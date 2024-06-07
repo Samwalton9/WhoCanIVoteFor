@@ -11,13 +11,21 @@
                 {% trans "You will need to take photo ID to vote at a polling station in this election" %}
             </h2>
         </summary>
-        <p>
-            {% blocktrans trimmed %}You do not need your poll card to vote. You must vote at your assigned polling station.
+        {% if requires_voter_id == "EFA-2002" %}
+            <p>Read more about <a href="https://www.eoni.org.uk/Vote/Voting-at-a-polling-place">voting in Northern
+                Ireland</a></p>
+        {% else %}
+            {% blocktrans trimmed %}
+                <p>You do not need your poll card to vote. You must vote at your assigned polling station.</p>
                 <ul>
-                    <li>Read more about <a href="https://www.gov.uk/voting-in-the-uk/polling-stations">voting in Great Britain</a>.</li>
-                    <li>Read more about <a href="https://www.gov.uk/how-to-vote/photo-id-youll-need">photo ID</a>.</li>
+                    <li>Read more about
+                        <a href="https://www.gov.uk/voting-in-the-uk/polling-stations">voting in Great Britain</a>.
+                    </li>
+                    <li>Read more about <a href="https://www.gov.uk/how-to-vote/photo-id-youll-need">photo ID</a>.
+                    </li>
                 </ul>
             {% endblocktrans %}
-        </p>
+        {% endif %}
+
     </details>
 </li>
