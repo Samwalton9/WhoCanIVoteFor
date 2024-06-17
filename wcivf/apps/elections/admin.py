@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Election, Post, VotingSystem
+from .models import Election, Post, PostElection, VotingSystem
 
 
 class ElectionAdmin(admin.ModelAdmin):
@@ -12,6 +12,11 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ("organization", "role")
 
 
+class PostElectionAdmin(admin.ModelAdmin):
+    search_fields = ("ballot_paper_id",)
+
+
 admin.site.register(Election, ElectionAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(VotingSystem)
+admin.site.register(PostElection, PostElectionAdmin)

@@ -1,9 +1,11 @@
 """
 Models for Hustings
 """
+
 import hashlib
 
 from django.db import models
+from django.db.models import TextChoices
 from django.utils import timezone
 from elections.models import PostElection
 from model_utils.models import TimeStampedModel
@@ -26,6 +28,13 @@ class HustingQueryset(models.QuerySet):
         )
 
 
+class HustingStatus(TextChoices):
+    suggested = "suggested", "Suggested"
+    published = "published", "Published"
+    rejected = "rejected", "Rejected"
+    unpublished = "unpublished", "Unpublished"
+
+
 class Husting(TimeStampedModel):
     """
     A Husting.
@@ -38,6 +47,7 @@ class Husting(TimeStampedModel):
     ends = models.DateTimeField(blank=True, null=True)
     location = models.CharField(max_length=250, blank=True, default="")
     postevent_url = models.URLField(blank=True, max_length=800)
+    status = models.CharField(default=False, choices=HustingStatus.choices)
 
     objects = HustingQueryset.as_manager()
 

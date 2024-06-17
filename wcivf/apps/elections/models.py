@@ -428,6 +428,9 @@ class PostElection(TimeStampedModel):
     class Meta:
         get_latest_by = "ynr_modified"
 
+    def __str__(self):
+        return self.ballot_paper_id
+
     @property
     def has_results(self):
         """
