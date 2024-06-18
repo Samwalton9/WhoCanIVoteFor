@@ -31,7 +31,6 @@ def repo_root(*x):
 # Add apps to the PYTHON PATH
 sys.path.insert(0, root("apps"))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -139,7 +138,6 @@ MEDIA_URL = "/media/"
 
 WSGI_APPLICATION = "wcivf.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -151,7 +149,7 @@ DATABASES = {
         "PASSWORD": "",
     }
 }
-
+DATABASE_ROUTERS = []
 if int(os.environ.get("FEEDBACK_DB_ENABLED", "0")):
     DATABASES["feedback"] = {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -163,7 +161,19 @@ if int(os.environ.get("FEEDBACK_DB_ENABLED", "0")):
     }
 
     if os.environ.get("DC_ENVIRONMENT") in ["production"]:
-        DATABASE_ROUTERS = ["core.db_routers.FeedbackRouter"]
+        DATABASE_ROUTERS.append("core.db_routers.FeedbackRouter")
+
+
+if os.environ.get("RDS_DB_NAME", False):
+    DATABASE_ROUTERS.append("core.db_routers.PrincipleRDSRouter")
+    DATABASES["principle"] = {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.environ.get("RDS_DB_NAME"),
+        "USER": "postgres",
+        "PASSWORD": os.environ.get("RDS_DB_PASSWORD"),
+        "HOST": os.environ.get("RDS_HOST"),
+        "PORT": "",
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -178,7 +188,6 @@ LOCALE_PATHS = (repo_root("locale"),)
 TIME_ZONE = "UTC"
 
 USE_I18N = True
-
 
 USE_TZ = True
 

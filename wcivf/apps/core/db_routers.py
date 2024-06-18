@@ -13,3 +13,15 @@ class FeedbackRouter(object):
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         return True
+
+
+class PrincipleRDSRouter:
+    def db_for_read(self, model, **hints):
+        return "default"
+
+    def db_for_write(self, model, **hints):
+        return "principle"
+
+    def allow_migrate(self, db, app_label, model_name=None, **hints):
+        # Managed by CI / Lambda
+        return False
