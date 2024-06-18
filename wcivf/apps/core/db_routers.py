@@ -26,6 +26,22 @@ class PrincipleRDSRouter:
             return "principle"
         return "default"
 
+    def allow_relation(self, obj1, obj2, **hints):
+        """
+        Allow any relation between objects in different databases.
+        """
+        db1 = (
+            hints.get("instance")
+            and hints["instance"]._state.db
+            or obj1._state.db
+        )
+        db2 = obj2._state.db
+        if db1 and db2:
+            if db1 == db2:
+                return True
+            return True  # Allow cross-database relations
+        return None
+
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         # Managed by CI / Lambda
         return False
