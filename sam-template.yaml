@@ -164,13 +164,13 @@ Resources:
             Name: batch-feedback-to-slack
             Description: Send feedback entries for the last week to slack
             Input: '{"command": "batch_feedback_to_slack", "args": ["--hours=24"]}'
-        ImportHustings:
-          Type: Schedule
-          Properties:
-            Schedule: rate(1 hour)
-            Name: import-hustings
-            Description: Import hustings from google spreadsheets
-            Input: '{"command": "import_hustings"}'
+#        ImportHustings:
+#          Type: Schedule
+#          Properties:
+#            Schedule: rate(1 hour)
+#            Name: import-hustings
+#            Description: Import hustings from google spreadsheets
+#            Input: '{"command": "import_hustings"}'
         ImportLeaflets:
          Type: Schedule
          Properties:
