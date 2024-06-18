@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load dc_forms %}
+
+{% block content %}
+    <h1>Tell us about a husting in {{ ballot.friendly_name }}</h1>
+    <p>We will review your suggestion before adding it to the site.
+        If you know about a lot of hustings, <a href="https://democracyclub.org.uk/contact/">please get in touch</a>.
+    </p>
+    <p>We will only accept hustings that are open to the public and invite all candidate. Single party or
+        paid-for events will not be accepted.</p>
+    <form method="post">
+        {{ form.errors }}
+        {{ form.non_field_errors }}
+        {% csrf_token %}
+        {{ form|dc_form }}
+        <button class="submit ds-button">Submit event</button>
+    </form>
+{% endblock %}

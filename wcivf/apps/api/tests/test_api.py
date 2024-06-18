@@ -97,14 +97,14 @@ class TestAPISearchViews(APITestCase):
     @vcr.use_cassette("fixtures/vcr_cassettes/test_postcode_view.yaml")
     def test_candidates_for_postcode_view(self):
         url = reverse("api:candidates-for-postcode-list")
-        with self.assertNumQueries(5):
+        with self.assertNumQueries(6):
             req = self.client.get("{}?postcode=EC1A4EU".format(url))
         assert req.status_code == 200
         assert req.json() == self.expected_response
 
     def test_candidates_for_ballots(self):
         url = reverse("api:candidates-for-ballots-list")
-        with self.assertNumQueries(5):
+        with self.assertNumQueries(6):
             req = self.client.get(
                 "{}?ballot_ids=parl.cities-of-london-and-westminster.2017-06-08".format(
                     url
@@ -115,7 +115,7 @@ class TestAPISearchViews(APITestCase):
 
     def test_candidates_for_ballots_modified_gt(self):
         url = reverse("api:candidates-for-ballots-list")
-        with self.assertNumQueries(5):
+        with self.assertNumQueries(6):
             req = self.client.get("{}?modified_gt=1832-06-07".format(url))
         assert req.status_code == 200
         assert req.json() == self.expected_response

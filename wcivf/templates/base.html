@@ -11,10 +11,10 @@
             {% include "_compressed_css.html" %}
         </style>
         <script id="loadcss">
-            (function(u, s) {
-                ! function(e) {
+            (function (u, s) {
+                !function (e) {
                     "use strict";
-                    var n = function(n, t, o) {
+                    var n = function (n, t, o) {
                         var l, r = e.document,
                             i = r.createElement("link");
                         if (t) l = t;
@@ -24,14 +24,14 @@
                         }
                         var d = r.styleSheets;
                         i.rel = "stylesheet", i.href = n, i.media = "only x", l.parentNode.insertBefore(i, t ? l : l.nextSibling);
-                        var f = function(e) {
+                        var f = function (e) {
                             for (var n = i.href, t = d.length; t--;)
                                 if (d[t].href === n) return e();
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 f(e)
                             })
                         };
-                        return i.onloadcssdefined = f, f(function() {
+                        return i.onloadcssdefined = f, f(function () {
                             i.media = o || "all"
                         }), i
                     };
@@ -62,7 +62,8 @@
                     {% get_language_info_list for LANGUAGES as languages %}
                     {% for language in languages %}
                         <li>
-                            <button name="language" value="{{ language.code }}" lang="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} aria-current="true"{% endif %}>
+                            <button name="language" value="{{ language.code }}" lang="{{ language.code }}"
+                                    {% if language.code == LANGUAGE_CODE %} aria-current="true"{% endif %}>
                                 {{ language.name_local }}
                             </button>
                         </li>
@@ -82,7 +83,15 @@
 {% endblock language_code %}
 
 {% block messages %}
-
+    {% if messages %}
+        <aside class="ds-status" aria-label="Status">
+            <ul class="ds-stack">
+                {% for message in messages %}
+                    <li {% if message.tags %}class=" {{ message.tags }} ds-status-message ds-status-{{ message.level_tag }} " {% endif %}> {{ message }} </li>
+                {% endfor %}
+            </ul>
+        </aside>
+    {% endif %}
 {% endblock messages %}
 
 {% block content %}

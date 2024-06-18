@@ -16,16 +16,19 @@ class HustingQueryset(models.QuerySet):
         """
         Returns QuerySet of objects in the future or today
         """
-        return self.filter(starts__date__gte=timezone.now().date())
+        return self.published().filter(starts__date__gte=timezone.now().date())
 
     def displayable(self):
         """
         Excludes objects in the past unless we have a postevent url for them
         """
-        return self.exclude(
+        return self.published().exclude(
             starts__date__lt=timezone.now().date(),
             postevent_url="",
         )
+
+    def published(self):
+        return self.filter(status=HustingStatus.published)
 
 
 class HustingStatus(TextChoices):
@@ -41,13 +44,29 @@ class Husting(TimeStampedModel):
     """
 
     post_election = models.ForeignKey(PostElection, on_delete=models.CASCADE)
-    title = models.CharField(max_length=250)
-    url = models.URLField(max_length=800)
-    starts = models.DateTimeField()
+    title = models.CharField(
+        max_length=250, help_text="The title or topic of the husting"
+    )
+    url = models.URLField(
+        max_length=800,
+        help_text="A webpage where people can find more information and/or sign up to attend",
+        verbose_name="URL",
+        blank=True,
+    )
+    starts = models.DateTimeField(
+        help_text="The date and time the event starts"
+    )
     ends = models.DateTimeField(blank=True, null=True)
-    location = models.CharField(max_length=250, blank=True, default="")
+    location = models.CharField(
+        max_length=250,
+        blank=True,
+        default="",
+        help_text="Descriptive text or address of the location (if online write 'internet')",
+    )
     postevent_url = models.URLField(blank=True, max_length=800)
-    status = models.CharField(default=False, choices=HustingStatus.choices)
+    status = models.CharField(
+        default=HustingStatus.suggested, choices=HustingStatus.choices
+    )
 
     objects = HustingQueryset.as_manager()
 

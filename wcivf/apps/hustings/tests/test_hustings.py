@@ -9,7 +9,7 @@ from elections.tests.factories import (
     PostFactory,
 )
 from freezegun import freeze_time
-from hustings.models import Husting
+from hustings.models import Husting, HustingStatus
 
 
 class TestHustings(TestCase):
@@ -32,6 +32,7 @@ class TestHustings(TestCase):
             starts=datetime(2017, 3, 23, 19, 00, tzinfo=timezone.utc),
             ends=datetime(2017, 3, 23, 21, 00, tzinfo=timezone.utc),
             location="St George's Church",
+            status=HustingStatus.published,
         )
 
     @freeze_time("2017-3-22")

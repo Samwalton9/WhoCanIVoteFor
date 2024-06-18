@@ -50,7 +50,7 @@ class BaseCandidatesAndElectionsViewSet(
 
     def add_hustings(self, postelection: PostElection):
         hustings = None
-        hustings_qs = postelection.husting_set.all()
+        hustings_qs = postelection.husting_set.published()
         if hustings_qs:
             hustings = HustingSerializer(
                 hustings_qs, many=True, read_only=True

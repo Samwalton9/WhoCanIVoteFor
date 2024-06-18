@@ -15,6 +15,7 @@ from elections.constants import (
     UPDATED_SLUGS,
 )
 from elections.devs_dc_client import DevsDCAPIException, DevsDCClient
+from hustings.models import Husting
 from leaflets.models import Leaflet
 from uk_election_timetables.calendars import Country
 from uk_election_timetables.election import TimetableEvent
@@ -91,7 +92,9 @@ class PostcodeToPostsMixin(object):
         pes = pes.select_related("election__voting_system")
         pes = pes.select_related("referendum")
 
-        pes = pes.prefetch_related("husting_set")
+        pes = pes.prefetch_related(
+            Prefetch("husting_set", queryset=Husting.objects.published())
+        )
         pes = pes.order_by(
             "past_date", "election__election_date", "-election__election_weight"
         )
