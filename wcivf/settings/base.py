@@ -171,7 +171,7 @@ if not os.environ.get("IGNORE_ROUTERS") and os.environ.get(
     DATABASES["principle"] = {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": os.environ.get("RDS_DB_NAME"),
-        "USER": "postgres",
+        "USER": "wcivf",
         "PASSWORD": os.environ.get("RDS_DB_PASSWORD"),
         "HOST": os.environ.get("RDS_HOST"),
         "PORT": "",
