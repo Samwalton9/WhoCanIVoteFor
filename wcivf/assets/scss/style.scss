@@ -32,68 +32,38 @@
 // // Generate atomic classes for documentation demos
 @import 'partials/_classes-colors.scss';
 @import 'partials/_classes-scales.scss';
+
 $scope: false;
 @mixin optional-styles {
-    @include description-lists;
-    @include button;
-    @include cta;
-    @include cluster;
-    @include grid;
-    @include sidebar;
-    @include details;
-    @include card;
-    @include candidate;
-    @include breadcrumbs;
-    @include table;
-    @include language;
-    @include header;
-    @include subnav;
-    @include footer;
-    @include radio;
-    @include checkbox;
-    @include select;
-    @include filter;
-    @include status;
-    @include codeblock;
-    @include logo;
-    @include party;
+  @include description-lists;
+  @include button;
+  @include cta;
+  @include cluster;
+  @include grid;
+  @include sidebar;
+  @include details;
+  @include card;
+  @include candidate;
+  @include breadcrumbs;
+  @include table;
+  @include language;
+  @include header;
+  @include subnav;
+  @include footer;
+  @include radio;
+  @include checkbox;
+  @include select;
+  @include filter;
+  @include status;
+  @include codeblock;
+  @include logo;
+  @include party;
 }
 
 @if $scope {
-    .ds-scope {
-        font-size: clamp(#{$s1}, 2vw, #{$s2});
-        @include fontMain;
-        @include type;
-        @include forms;
-        @include stack;
-        @include optional-styles;
-        @include dark;
-        @include page;
-        @include utilities;
-    }
-    .ds-scope *,
-    .ds-scope *::before,
-    .ds-scope *::after {
-        box-sizing: border-box;
-    }
-
-    body {margin:0;}
-}
-
-@else {
-     body {
-        // font-size: 100%;
-        font-size: clamp(#{$s1}, 2vw, #{$s2});
-        @include fontMain;
-    }
-     body *,
-     body *::before,
-     body *::after {
-        box-sizing: border-box;
-    }
-    body {
-        margin: 0;
-    }
+  .ds-scope {
+    font-size: clamp(#{$s1}, 2vw, #{$s2});
+    @include fontMain;
     @include type;
     @include forms;
     @include stack;
@@ -101,32 +71,63 @@ $scope: false;
     @include dark;
     @include page;
     @include utilities;
+  }
+  .ds-scope *,
+  .ds-scope *::before,
+  .ds-scope *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+} @else {
+  body {
+    // font-size: 100%;
+    font-size: clamp(#{$s1}, 2vw, #{$s2});
+    @include fontMain;
+  }
+  body *,
+  body *::before,
+  body *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+  }
+  @include type;
+  @include forms;
+  @include stack;
+  @include optional-styles;
+  @include dark;
+  @include page;
+  @include utilities;
 }
 
 .ds-page {
-    background-color: white;
+  background-color: white;
 }
 
 input[type=radio] {
-    display: none;
+  display: none;
 }
 
 .link-button {
-    display: inline-flex;
-    min-width: fit-content;
-    border: 2px solid #00AEEF;
-    color: #00AEEF;
-    font-size: 1rem;
-    padding: 1rem 2rem 1.0625rem 2rem;
-    text-decoration: none;
+  display: inline-flex;
+  min-width: fit-content;
+  border: 2px solid #00AEEF;
+  color: #00AEEF;
+  font-size: 1rem;
+  padding: 1rem 2rem 1.0625rem 2rem;
+  text-decoration: none;
 }
 
-#feedback_form input[data-toggle]:checked+label,
-#feedback_form input[data-toggle]:checked+label:active {
-    background-color: #00AEEF;
-    color: white;
-    border-color: #0089bc;
-    outline: 3px solid #ffbf47;
+#feedback_form input[data-toggle]:checked + label,
+#feedback_form input[data-toggle]:checked + label:active {
+  background-color: #00AEEF;
+  color: white;
+  border-color: #0089bc;
+  outline: 3px solid #ffbf47;
 }
 
 #language-menu {
@@ -145,31 +146,45 @@ input[type=radio] {
   }
 }
 
+input[type=url], input[type=date], input[type=time] {
+  color: #403F41;
+  padding: .5rem;
+  border: 2px solid;
+  width: 100%;
+  max-width: 50ch;
+  box-shadow: inset .25rem .25rem 0 rgba(64, 63, 65, 0.2);
+  box-sizing: border-box;
+}
+
 #language-label {
   font-family: Montserrat, sans-serif;
 }
 
 .ds-error {
-//  centers the error for the postcode lookup
-    margin: 1rem auto;
+  //  centers the error for the postcode lookup
+  margin: 1rem auto;
 }
 
 .ds-status-message p {
   color: $white;
 }
 
-#results-table { 
-    td:nth-child(2) {
-        text-align: right;
-    }
-    th, td { border: 1px solid black; }
+#results-table {
+  td:nth-child(2) {
+    text-align: right;
+  }
+
+  th, td {
+    border: 1px solid black;
+  }
 }
+
 .ds-not-sidebar summary, .ds-details * {
-    font-size: inherit;
+  font-size: inherit;
 }
 
 @media (max-width: 738px) {
-    .emblem-for-candidate-list {
-        display: none;
-    }
+  .emblem-for-candidate-list {
+    display: none;
+  }
 }

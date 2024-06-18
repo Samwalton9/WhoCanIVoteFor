@@ -5,7 +5,12 @@
             <span aria-hidden="true">📅</span>
             {% trans "Election events" %}
         </h3>
-        <p>{% trans "You can meet candidates and question them at events (often known as 'hustings'). Here are some events that are taking place:" %}</p>
-        {% include "hustings/includes/_list.html" with hustings=postelection.husting_set.displayable %}
+        {% if postelection.husting_set.displayable.exists %}
+            <p>{% trans "You can meet candidates and question them at events (often known as 'hustings'). Here are some events that are taking place:" %}</p>
+            {% include "hustings/includes/_list.html" with hustings=postelection.husting_set.displayable %}
+        {% else %}
+            <p>Do you know about any events (often known as 'hustings')? If so, please <a href="{% url "hustings:add-husting" ballot_paper_id=postelection.ballot_paper_id %}">tell us about them</a></p>
+        {% endif %}
+
     </div>
 </div>

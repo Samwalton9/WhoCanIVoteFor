@@ -27,6 +27,10 @@ urlpatterns = (
         path("feedback/", include("feedback.urls")),
         path("api/", include(("api.urls", "api"), namespace="api")),
         path(
+            "hustings/",
+            include(("hustings.urls", "hustings"), namespace="hustings"),
+        ),
+        path(
             "ppcs/",
             include(("ppc_2024.urls", "ppc_2024"), namespace="ppc_2024"),
         ),
