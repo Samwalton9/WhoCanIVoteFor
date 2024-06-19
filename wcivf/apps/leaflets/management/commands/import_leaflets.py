@@ -36,32 +36,29 @@ class Command(BaseCommand):
                 person__personpost__post_election__in=qs
             ).delete()
 
-            try:
-                last_uploaded = (
-                    Leaflet.objects.order_by(
-                        "-date_uploaded_to_electionleaflets"
-                    )
-                    .first()
-                    .date_uploaded_to_electionleaflets
-                )
-            except AttributeError:
-                last_uploaded = None
+            latest_upload = Leaflet.objects.order_by(
+                "-date_uploaded_to_electionleaflets"
+            ).first()
 
-            if not last_uploaded:
-                last_uploaded = str(
-                    datetime.strptime(options["uploaded_since"], "%Y-%m-%d")
-                )
+            since = options.get("uploaded_since", None)
+            if since and " " not in since:
+                since = f"{since} 00:00"
+            if not since:
+                try:
+                    since = latest_upload.date_uploaded_to_electionleaflets
+                except AttributeError:
+                    since = None
 
-            params = urlencode({"modified__gt": last_uploaded})
-            url = f"{base_url}/?{params}"
-            req = requests.get(url)
+            params = {}
+            if since:
+                params = {"modified__gt": since}
+            url = f"{base_url}/?{urlencode(params)}"
             while url:
-                if req.status_code == 200:
-                    results = req.json()
-                    url = results.get("next", None)
-                    self.add_leaflets(results.get("results", []))
-                else:
-                    url = None
+                req = requests.get(url)
+                req.raise_for_status()
+                results = req.json()
+                url = results.get("next", None)
+                self.add_leaflets(results.get("results", []))
         else:
             Leaflet.objects.all().delete()
             for ballot in qs:
