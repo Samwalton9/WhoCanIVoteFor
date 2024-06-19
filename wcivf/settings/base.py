@@ -167,8 +167,8 @@ if int(os.environ.get("FEEDBACK_DB_ENABLED", "0")):
 if not os.environ.get("IGNORE_ROUTERS") and os.environ.get(
     "RDS_DB_NAME", False
 ):
-    DATABASE_ROUTERS.append("core.db_routers.PrincipleRDSRouter")
-    DATABASES["principle"] = {
+    DATABASE_ROUTERS.append("core.db_routers.PrincipalRDSRouter")
+    DATABASES["principal"] = {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": os.environ.get("RDS_DB_NAME"),
         "USER": "wcivf",
