@@ -65,7 +65,7 @@
                 display: inline-block;
                 height: 1em;
                 width: 1em;
-                border: 1px solid black;
+                border: none;
                 margin: 0 0.1em 0 0.5em;
             }
 
@@ -74,7 +74,7 @@
             }
 
             .key-pink::before {
-                background-color: rgba(230, 0, 124, 0.5);
+                border: 3px solid rgba(230, 0, 124, 1) !important;
             }
         </style>
         <p class="map-key">Key:
@@ -120,7 +120,8 @@
                 var old_boundary = L.geoJSON(data[0], {
                     style: {
                         color: 'rgba(64, 63, 65, 0.5)',
-                        stroke: false,
+                        weight: 0,
+
                         fillOpacity: 1
                     },
                     onEachFeature: onEachFeature
@@ -128,9 +129,10 @@
                 allLayers.addLayer(old_boundary);
                 var new_boundary = L.geoJSON(data[1], {
                     style: {
-                        color: 'rgba(230, 0, 124, 0.5)',
-                        stroke: false,
-                        fillOpacity: 1
+                        color: 'rgba(230, 0, 124, 1)',
+                        fill: false,
+                        weight: 3,
+                        fillOpacity: 0
                     },
                     onEachFeature: onEachFeature
                 });
@@ -139,7 +141,7 @@
                 map.fitBounds(allLayers.getBounds());
                 var postcodeLocation = {{postcode_location|safe}};
                 layer = L.geoJSON(postcodeLocation, {
-                    style: {color: '#00B6FF'}
+                    style: {color: 'rgba(230, 0, 124, 0.5)'}
                 });
                 map.addLayer(layer);
             });
